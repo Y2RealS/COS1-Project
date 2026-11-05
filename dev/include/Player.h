@@ -15,6 +15,7 @@ public:
 
     std::string getName() const;
     int getHealth() const;
+    int getAttackPower() const;
     bool isAlive() const;
 
     void takeDamage(int amount);
