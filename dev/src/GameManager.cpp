@@ -69,3 +69,17 @@ void GameManager::processChoice(int choice) {
         break;
     }
 }
+int GameManager::getValidatedInput() {
+    std::string input;
+    while (true) {
+        std::cout << "Enter choice: ";
+        std::getline(std::cin, input);
+        try {
+            // Convert string to integer safely
+            return std::stoi(input);
+        }
+        catch (...) {
+            std::cout << "Invalid input. Please enter a valid number.\n";
+        }
+    }
+}
