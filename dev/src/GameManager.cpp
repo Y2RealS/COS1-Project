@@ -1,4 +1,5 @@
 #include "../include/GameManager.h"
+#include "Enemy.h"
 #include <iostream>
 
 GameManager::GameManager() : player("Hero", 100, 15), isRunning(true) {}
@@ -23,9 +24,39 @@ void GameManager::showMenu() {
 
 void GameManager::processChoice(int choice) {
     switch (choice) {
-    case 1:
-        std::cout << "Entering battle loop...\n";
+    case 1: {
+        std::cout << "\n=== Battle Initiated! ===\n";
+        Enemy enemy("Tacit Discord", 50, 10);
+
+        while (player.getHealth() > 0 && enemy.isAlive()) {
+            std::cout << "\n" << player.getName() << " HP: " << player.getHealth()
+                << " | " << enemy.getName() << " HP: " << enemy.getHealth() << "\n";
+            std::cout << "1. Attack\n2. Run\nChoose action: ";
+
+            int action;
+            std::cin >> action;
+
+            if (action == 1) {
+                // Player attacks enemy
+                std::cout << "You attack " << enemy.getName() << " for " << player.getAttackPower() << " damage!\n";
+                enemy.takeDamage(player.getAttackPower());
+
+                // Enemy attacks back if alive
+                if (enemy.isAlive()) {
+                    std::cout << enemy.getName() << " attacks you for " << enemy.getAttackPower() << " damage!\n";
+                    player.takeDamage(enemy.getAttackPower());
+                }
+                else {
+                    std::cout << "You defeated " << enemy.getName() << "!\n";
+                }
+            }
+            else {
+                std::cout << "You fled from battle!\n";
+                break;
+            }
+        }
         break;
+    }
     case 2:
         std::cout << "Player: " << player.getName() << " | HP: " << player.getHealth() << "\n";
         break;

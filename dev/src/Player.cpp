@@ -7,6 +7,9 @@ Player::Player(std::string playerName, int hp, int atk)
 
 std::string Player::getName() const { return name; }
 int Player::getHealth() const { return health; }
+int Player::getAttackPower() const {
+    return attackPower;
+}
 bool Player::isAlive() const { return health > 0; }
 
 void Player::takeDamage(int amount) {
