@@ -52,4 +52,13 @@ Each week I will summarize my milestone activity and progress by writing a stand
 
 ### Week 4
 
-My final stand up...
+⚙️ Overview: This past week I focused on wrapping up Milestone 4 for Project Rover in C++, integrating planetary environmental hazards into GameManager, and aligning my GitHub issues, project board, and branch workflow (dev to main).
+
+
+🌵 Challenges: Resolving a missing Enemy.h header reference in Visual Studio and making sure new menu and hazard logic were properly connected and rebuilt across files without stale builds causing confusion.
+
+
+🏆 Accomplishments: Implemented randomized planetary environmental hazards via triggerEnvironmentalHazard(), confirmed clean compilation and gameplay across GameManager, Player, and Enemy, updated the project board (moving completed items like Issues #9 and #11 to Done while keeping remaining items in Backlog), and documented progress in /docs/Milestone4.md with screenshots in /images.
+
+
+🔮 Next Steps: My primary goal next is to finalize the dev to main pull request merge, verify repository visibility and deliverable requirements, and continue expanding gameplay depth in future iterations.
