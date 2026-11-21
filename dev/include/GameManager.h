@@ -8,11 +8,15 @@ private:
     Player player;
     bool isRunning;
 
+    void triggerEnvironmentalHazard();
+
 public:
     GameManager();
     void start();
     void showMenu();
     void processChoice(int choice);
+    int getValidatedInput();
+
 };
 
 #endif

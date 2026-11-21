@@ -1,16 +1,20 @@
-#include "../include/GameManager.h"
+#include "GameManager.h"
 #include "Enemy.h"
 #include <iostream>
+#include <string>
+#include <limits>
+#include <cstdlib>
+#include <ctime>
 
-GameManager::GameManager() : player("Hero", 100, 15), isRunning(true) {}
+GameManager::GameManager() : player("Hero", 100, 15), isRunning(true) {
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+}
 
 void GameManager::start() {
     std::cout << "=== Turn-Based RPG Started ===" << std::endl;
     while (isRunning) {
         showMenu();
-        int choice;
-        std::cout << "Enter choice: ";
-        std::cin >> choice;
+        int choice = getValidatedInput();
         processChoice(choice);
     }
 }
@@ -20,6 +24,7 @@ void GameManager::showMenu() {
     std::cout << "1. Start Battle Loop\n";
     std::cout << "2. View Player Stats\n";
     std::cout << "3. Exit Game\n";
+    std::cout << "4. Scan Planetary Hazards\n";
 }
 
 void GameManager::processChoice(int choice) {
@@ -34,7 +39,13 @@ void GameManager::processChoice(int choice) {
             std::cout << "1. Attack\n2. Run\nChoose action: ";
 
             int action;
-            std::cin >> action;
+            if (!(std::cin >> action)) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Invalid action. Try again.\n";
+                continue;
+            }
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
             if (action == 1) {
                 // Player attacks enemy
@@ -64,8 +75,47 @@ void GameManager::processChoice(int choice) {
         std::cout << "Exiting game. Goodbye!\n";
         isRunning = false;
         break;
+    case 4:
+        triggerEnvironmentalHazard();
+        break;
     default:
         std::cout << "Invalid selection. Try again.\n";
         break;
+    }
+}
+
+void GameManager::triggerEnvironmentalHazard() {
+    int roll = std::rand() % 4;
+    std::cout << "\n=== Planetary Environmental Scan ===\n";
+    if (roll == 0) {
+        std::cout << "Dust Storm! Low visibility slows sensor sweeps, but hull remains intact.\n";
+    }
+    else if (roll == 1) {
+        std::cout << "Acid Rain / Radiation Surge! You take 10 damage.\n";
+        player.takeDamage(10);
+        std::cout << player.getName() << " HP is now " << player.getHealth() << ".\n";
+    }
+    else if (roll == 2) {
+        std::cout << "Seismic Tremor! Ground shifts beneath you for 5 damage.\n";
+        player.takeDamage(5);
+        std::cout << player.getName() << " HP is now " << player.getHealth() << ".\n";
+    }
+    else {
+        std::cout << "Surface conditions are calm. No environmental hazards detected.\n";
+    }
+}
+
+int GameManager::getValidatedInput() {
+    std::string input;
+    while (true) {
+        std::cout << "Enter choice: ";
+        std::getline(std::cin, input);
+        try {
+            // Convert string to integer safely.
+            return std::stoi(input);
+        }
+        catch (...) {
+            std::cout << "Invalid input. Please enter a valid number.\n";
+        }
     }
 }
