@@ -9,6 +9,7 @@ private:
     bool isRunning;
 
     void triggerEnvironmentalHazard();
+
 public:
     GameManager();
     void start();

@@ -111,7 +111,7 @@ int GameManager::getValidatedInput() {
         std::cout << "Enter choice: ";
         std::getline(std::cin, input);
         try {
-            // Convert string to integer safely
+            // Convert string to integer safely.
             return std::stoi(input);
         }
         catch (...) {
